@@ -61,6 +61,7 @@ const Navbar = () => {
             </li>
           ))}
         </ul>
+        <div></div>
         <div className="flex">
           <img src={instagram} alt="instagram" className="mr-2" />
           <img src={facebook} alt="facebook" />
