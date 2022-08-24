@@ -53,6 +53,7 @@ const Navbar = () => {
         <ul className="flex">
           {navbarArray.map((item, index) => (
             <li
+              key={index}
               className={`${
                 index === navbarArray.length - 1 ? "mr-0" : "mr-10"
               } font-poppins text-base font-bold text-main`}
