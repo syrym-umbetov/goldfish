@@ -4,6 +4,7 @@ import { gameDatas } from "../Core/api/REST";
 
 import { dummyJSON } from "../dummydata/dummyJSON";
 import MainPageCatalog from "../components/MainPageCatalog";
+import ProductsList from "./../components/ProductsList";
 
 const Main = () => {
   const [randomGame, setRandomGame] = useState<Game[]>([]);
@@ -11,7 +12,10 @@ const Main = () => {
   useEffect(() => {
     const fetch = async () => {
       setLoading(true);
-      const objectData = await gameDatas("/api/search", { limit: 5 });
+      const objectData = await gameDatas("/api/search", {
+        categories: "hBqZ3Ar4RJ",
+        limit: 5,
+      });
       setRandomGame(objectData.data.games);
       setLoading(false);
     };
@@ -27,6 +31,7 @@ const Main = () => {
       </div>
       <div className="mt-2 mb-4 ml-[100px]">
         <MainPageCatalog randomGame={randomGame} loading={loading} />
+        <ProductsList />
       </div>
     </div>
   );

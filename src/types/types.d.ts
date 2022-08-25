@@ -1,6 +1,8 @@
 type Game = {
   active: boolean;
+  amazon_rank: number;
   artists: string[];
+  availability_status: string;
   average_learning_complexity: number;
   average_strategy_complexity: number;
   average_user_rating: number;
@@ -72,6 +74,8 @@ type Game = {
   upc: string;
   url: string;
   visits: number;
+  weight_amount: number;
+  weight_units: string;
   year_published: number;
 };
 
