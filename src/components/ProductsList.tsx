@@ -3,6 +3,7 @@ import ProductCard from "./ProductCard";
 import { gameDatas } from "../Core/api/REST";
 import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
+import Loader from "./../utils/Loader";
 import "../hideScrollbar.css";
 
 const LeftArrow = () => {
@@ -39,11 +40,12 @@ const ProductsList = () => {
     };
     fetch();
   }, []);
-  // {players, playtime, year_published}
   return (
     <div>
       <div className="text-lg font-bold mb-5 mt-10">Be first to buy</div>
-      {loading && <div>...Loading</div>}
+      <div className="flex justify-center items-center">
+        {loading && <Loader />}
+      </div>
       <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
         {game.map((item) => (
           <ProductCard key={item.id} {...item} />
@@ -51,7 +53,9 @@ const ProductsList = () => {
       </ScrollMenu>
 
       <div className="text-lg font-bold mb-5 mt-10">Special offers</div>
-      {loading && <div>...Loading</div>}
+      <div className="flex justify-center items-center">
+        {loading && <Loader />}
+      </div>
       <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
         {game.reverse().map((item) => (
           <ProductCard key={item.id} {...item} />

@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import Loader from "./../utils/Loader";
 
 type MainPageCatalogProps = {
   randomGame: Game[];
@@ -8,7 +9,9 @@ const MainPageCatalog: FC<MainPageCatalogProps> = ({ randomGame, loading }) => {
   return (
     <div>
       <div className=" font-poppins text-lg font-bold mb-5 mt-10">Catalog</div>
-      {loading && <div>...Loading</div>}
+      <div className="flex justify-center items-center">
+        {loading && <Loader />}
+      </div>
       <div className="grid grid-cols-4 gap-x-16 gap-y-4">
         {randomGame &&
           randomGame.map(({ name, image_url, id }, index) => (

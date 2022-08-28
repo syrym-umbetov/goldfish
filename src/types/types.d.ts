@@ -106,3 +106,17 @@ type Sku = {
   name: string;
   sku: string;
 };
+
+type Character = {
+  appearance: number[];
+  better_call_saul_appearance: [];
+  birthday: string;
+  category: string;
+  char_id: number;
+  img: string;
+  name: string;
+  nichkname: string;
+  occupation: string[];
+  portrayed: string;
+  status: string;
+};
