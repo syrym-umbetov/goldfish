@@ -1,13 +1,10 @@
-import React, { Dispatch, FC, SetStateAction, useRef, useState } from "react";
+import { FC, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "./contexts/AuthContext";
+import { useAuth } from "../contexts/AuthContext";
 import ForgotPassword from "./ForgotPassword";
 import SignUp from "./SignUp";
 import { inputStyle } from "../../constants";
-
-type LoginProps = {
-  setOpenLogin: Dispatch<SetStateAction<boolean>>;
-};
+import { LoginProps } from "../types/props";
 
 const Login: FC<LoginProps> = ({ setOpenLogin }) => {
   const [toggleLogin, setToggleLogin] = useState(false);
@@ -15,7 +12,7 @@ const Login: FC<LoginProps> = ({ setOpenLogin }) => {
   const navigate = useNavigate();
   const emailRef = useRef<any>();
   const passwordRef = useRef<any>();
-  const { login, currentUser } = useAuth();
+  const { login } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 

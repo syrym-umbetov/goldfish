@@ -5,15 +5,14 @@ import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
 import Loader from "../../utils/Loader";
 import "../utils/hideScrollbar.css";
+import { arrowIcons, sectionTitles } from "../../constants";
+import { flexCenter } from "./../../constants";
 
 const LeftArrow = () => {
   const { scrollPrev } = useContext(VisibilityContext);
 
   return (
-    <ChevronLeftIcon
-      className="mt-[200px] cursor-pointer hover:scale-150 hover:ease-in-out w-[50px] absolute z-[1]"
-      onClick={() => scrollPrev()}
-    />
+    <ChevronLeftIcon className={arrowIcons} onClick={() => scrollPrev()} />
   );
 };
 
@@ -22,7 +21,7 @@ const RightArrow = () => {
 
   return (
     <ChevronRightIcon
-      className="mt-[200px] cursor-pointer hover:scale-150 hover:ease-in-out w-[50px] absolute z-[1] right-[20px] "
+      className={`${arrowIcons} right-[20px] `}
       onClick={() => scrollNext()}
     />
   );
@@ -42,20 +41,16 @@ const ProductsList = () => {
   }, []);
   return (
     <div>
-      <div className="text-lg font-bold mb-5 mt-10">Be first to buy</div>
-      <div className="flex justify-center items-center">
-        {loading && <Loader />}
-      </div>
+      <div className={sectionTitles}>Be first to buy</div>
+      <div className={flexCenter}>{loading && <Loader />}</div>
       <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
         {game.map((item) => (
           <ProductCard key={item.id} {...item} />
         ))}
       </ScrollMenu>
 
-      <div className="text-lg font-bold mb-5 mt-10">Special offers</div>
-      <div className="flex justify-center items-center">
-        {loading && <Loader />}
-      </div>
+      <div className={sectionTitles}>Special offers</div>
+      <div className={flexCenter}>{loading && <Loader />}</div>
       <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
         {game.reverse().map((item) => (
           <ProductCard key={item.id} {...item} />

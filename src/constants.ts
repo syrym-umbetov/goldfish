@@ -21,3 +21,29 @@ export const dummyJSON = [
     advertText: "Настольная игра варгейм",
   },
 ];
+
+export const navbarArray = [
+  "Warhammer",
+  "Magic:the Cathering",
+  "Events",
+  "About Us",
+  "Contact",
+];
+
+export const arrowIcons =
+  "mt-[200px] cursor-pointer hover:scale-150 hover:ease-in-out w-[50px] absolute z-[1]";
+
+export const flexCenter = "flex justify-center items-center";
+
+export const sectionTitles = "text-lg font-bold mb-5 mt-10";
+
+export const mainColor = "#F9A43F";
+
+export const catalogArray = [
+  "Warhammer 40000",
+  "Настольные игры",
+  "Magic: the Gathering",
+  "Аксессуары для игр",
+  "Краски ",
+  "Аксессуары для моделизма",
+];

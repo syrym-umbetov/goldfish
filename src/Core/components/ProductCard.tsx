@@ -2,16 +2,8 @@ import React, { FC } from "react";
 import Button from "./Button";
 import imagePlaceholder from "../../assets/NoImage.png";
 import { UserGroupIcon, ClockIcon } from "@heroicons/react/solid";
-
-type ProductCardProps = {
-  name: string;
-  images: Images;
-  price: string;
-  players: string;
-  playtime: string;
-  year_published: number;
-  price_text: string;
-};
+import { ProductCardProps } from "../types/props";
+import { mainColor } from "./../../constants";
 
 const ProductCard: FC<ProductCardProps> = ({
   name,
@@ -25,7 +17,9 @@ const ProductCard: FC<ProductCardProps> = ({
   const { original } = images;
 
   return (
-    <div className="shadow-[#F9A43F] shadow-md font-poppins h-[409px] m-[10px] border-2 w-[255px] border-white rounded-lg py-[28px] px-[50px] text-center">
+    <div
+      className={`shadow-[${mainColor}] shadow-md font-poppins h-[409px] m-[10px] border-2 w-[255px] border-white rounded-lg py-[28px] px-[50px] text-center`}
+    >
       <div>
         <img
           src={
@@ -54,10 +48,8 @@ const ProductCard: FC<ProductCardProps> = ({
       </div>
       <p className="text-xs h-10">{name}</p>
       <p>{price_text}</p>
-      <div>
-        <Button name="Add to basket" contained />
-        <Button name="Buy in a click" />
-      </div>
+      <Button name="Add to basket" contained />
+      <Button name="Buy in a click" />
     </div>
   );
 };

@@ -1,11 +1,8 @@
-import React, { FC, Dispatch, SetStateAction, useState, useRef } from "react";
+import { FC, useState, useRef } from "react";
 import Login from "./Login";
-import { useAuth } from "./contexts/AuthContext";
+import { useAuth } from "../contexts/AuthContext";
 import { inputStyle } from "../../constants";
-
-type ForgotPasswordProps = {
-  setOpenForgotPassword: Dispatch<SetStateAction<boolean>>;
-};
+import { ForgotPasswordProps } from "../types/props";
 
 const ForgotPassword: FC<ForgotPasswordProps> = ({ setOpenForgotPassword }) => {
   const [message, setMessage] = useState("");

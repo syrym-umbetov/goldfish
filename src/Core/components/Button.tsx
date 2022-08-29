@@ -1,10 +1,6 @@
 import React, { FC } from "react";
 import { ShoppingCartIcon } from "@heroicons/react/solid";
-
-type ButtonProps = {
-  name: string;
-  contained?: boolean;
-};
+import { ButtonProps } from "../types/props";
 
 const Button: FC<ButtonProps> = ({ name, contained }) => {
   return (

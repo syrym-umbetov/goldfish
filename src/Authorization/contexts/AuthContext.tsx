@@ -1,13 +1,6 @@
+import { createContext, useContext, useState, useEffect } from "react";
+import { auth } from "../../firebase";
 import {
-  createContext,
-  useContext,
-  ReactNode,
-  useState,
-  useEffect,
-} from "react";
-import { auth } from "../../../firebase";
-import {
-  ConfirmationResult,
   createUserWithEmailAndPassword,
   RecaptchaVerifier,
   sendPasswordResetEmail,
@@ -16,27 +9,14 @@ import {
   signOut,
   updateProfile,
   User,
-  UserCredential,
 } from "firebase/auth";
+import { AuthContextType, AuthProviderProps } from "../types/props";
 
-type AuthContextType = {
-  currentUser: User | null | undefined;
-  signup: (email: string, password: string) => Promise<UserCredential>;
-  login: (email: string, password: string) => Promise<UserCredential>;
-  logout: () => Promise<void>;
-  resetPassword: (email: string) => Promise<void>;
-  verifyPhoneNumber: (phoneNumber: string) => Promise<ConfirmationResult>;
-  updateName: (name: string) => Promise<void> | undefined;
-};
 const AuthContext = createContext({} as AuthContextType);
 
 export function useAuth() {
   return useContext(AuthContext);
 }
-
-type AuthProviderProps = {
-  children: ReactNode;
-};
 
 declare global {
   interface Window {

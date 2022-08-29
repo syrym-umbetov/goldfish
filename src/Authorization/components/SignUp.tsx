@@ -1,20 +1,11 @@
-import React, {
-  Dispatch,
-  FC,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { useAuth } from "./contexts/AuthContext";
+import { FC, useEffect, useRef, useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Login from "./Login";
 import PhoneNumberAuth from "./PhoneNumberAuth";
 import { inputStyle } from "../../constants";
+import { SignUpProps } from "../types/props";
 
-type SignUpProps = {
-  setOpenSignUp: Dispatch<SetStateAction<boolean>>;
-};
 const SignUp: FC<SignUpProps> = ({ setOpenSignUp }) => {
   const nameRef = useRef<any>();
   const emailRef = useRef<any>();
@@ -28,7 +19,6 @@ const SignUp: FC<SignUpProps> = ({ setOpenSignUp }) => {
   const [message, setMessage] = useState("");
   const [toggleSignUp, setToggleSignUp] = useState(false);
   const navigate = useNavigate();
-  console.log(currentUser);
   async function handleSubmit(e: any) {
     e.preventDefault();
 

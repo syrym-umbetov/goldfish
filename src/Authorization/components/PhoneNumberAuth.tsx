@@ -1,10 +1,9 @@
-import React, { Dispatch, FC, SetStateAction, useRef, useState } from "react";
-import { useAuth } from "./contexts/AuthContext";
+import { FC, useRef, useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
 import Login from "./Login";
 import { ConfirmationResult } from "firebase/auth";
-type PhoneNumberProps = {
-  setOpenSignUp: Dispatch<SetStateAction<boolean>>;
-};
+import { PhoneNumberProps } from "../types/props";
+
 const inputStyle = `border-2 border-gray-500 rounded w-[100%] h-10 mt-3 p-2 active:border-red`;
 
 const PhoneNumberAuth: FC<PhoneNumberProps> = ({ setOpenSignUp }) => {

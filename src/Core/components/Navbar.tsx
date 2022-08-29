@@ -1,9 +1,9 @@
 import logo from "../../assets/logo.svg";
 import instagram from "../../assets/instagram.svg";
 import facebook from "../../assets/facebook.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SignUp from "../../Authorization/components/SignUp";
-import { useAuth } from "../../Authorization/components/contexts/AuthContext";
+import { useAuth } from "../../Authorization/contexts/AuthContext";
 
 import {
   ShoppingCartIcon,
@@ -15,6 +15,8 @@ import {
 import { gameDatas } from "../api/REST";
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "./Modal";
+import { navbarArray } from "../../constants";
+import Catalog from "./Catalog";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -31,37 +33,25 @@ const Navbar = () => {
   const { currentUser, logout } = useAuth();
   const [openSignUp, setOpenSignUp] = useState(false);
 
-  const [searchInput, setSearchInput] = useState("");
+  const [searchInput, setSearchInput] = useState<
+    string | number | readonly string[] | undefined
+  >();
   const [game, setGame] = useState<Game[]>([]);
-  const fetchData = () => {
-    const fetch = async () => {
+  const [catalogOpen, setCatalogOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (searchInput === "") {
+        setGame([]);
+        return;
+      }
       const objectData = await gameDatas("/api/search", {
         name: searchInput,
       });
       setGame(objectData.data.games);
     };
-
-    fetch();
-  };
-
-  const searchItems = (searchValue: any) => {
-    if (searchValue) {
-      setSearchInput(searchValue);
-      fetchData();
-    } else {
-      setSearchInput("");
-      setGame([]);
-    }
-  };
-
-  const navbarArray = [
-    "Catalog",
-    "Wharhammer",
-    "Magic:the Cathering",
-    "Events",
-    "About Us",
-    "Contact",
-  ];
+    fetchData();
+  }, [searchInput]);
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
@@ -72,14 +62,19 @@ const Navbar = () => {
       <nav
         className={`h-[72px] sm:h-[82px] bg-main w-full flex justify-between pt-6 pb-5 ${
           currentUser ? "pl-[130px] pr-[30px]" : "lg:px-[130px]"
-        } items-center `}
+        } items-center scroll-smooth`}
       >
         <button className="sm:absolute">
           <MenuIcon className="sm:hidden ml-3 w-[25px] h-[25px] stroke-[#ffffff] mr-2" />
         </button>
         <Link to="/">
           <div className="ml-0">
-            <img src={logo} alt="logo" className="w-[137px] h-[37px]" />
+            <img
+              src={logo}
+              alt="logo"
+              id="logo"
+              className="w-[137px] h-[37px]"
+            />
           </div>
         </Link>
 
@@ -98,8 +93,7 @@ const Navbar = () => {
             value={searchInput}
             className="rounded-none font-poppins block p-2 w-full text-sm text-gray-900 sm:rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Search games"
-            onChange={(e) => searchItems(e.target.value)}
-            list="browsers"
+            onChange={(e) => setSearchInput(e.target.value)}
           />
           {game.length ? (
             <ul className="font-poppins text-sm absolute w-[100%] rounded bg-white">
@@ -154,9 +148,21 @@ const Navbar = () => {
         </div>
       </nav>
       <nav className="hidden sm:flex h-[52px] bg-navbar2 w-full justify-between pt-6 pb-5 px-[130px] items-center">
-        <button>
-          <MenuIcon className="w-[25px] h-[25px] stroke-[#ffffff]" />
-        </button>
+        <div className="flex">
+          <MenuIcon
+            className="w-[25px] h-[25px] stroke-[#ffffff] cursor-pointer"
+            onClick={() => setCatalogOpen((prev) => !prev)}
+          />
+          <div
+            className="font-poppins text-base font-bold text-main ml-3 cursor-pointer"
+            onClick={() => setCatalogOpen((prev) => !prev)}
+          >
+            Catalog
+          </div>
+          <div className="z-50 ">
+            {catalogOpen && <Catalog setCatalogOpen={setCatalogOpen} />}
+          </div>
+        </div>
         <ul className="flex">
           {navbarArray.map((item, index) => (
             <li

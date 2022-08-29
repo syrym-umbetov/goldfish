@@ -1,10 +1,5 @@
 import React, { FC } from "react";
-
-type BannerProps = {
-  title: string;
-  img: string;
-  advertText: string;
-};
+import { BannerProps } from "../types/props";
 
 const Banner: FC<BannerProps> = ({ title, img, advertText }) => {
   return (
