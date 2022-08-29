@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import Banner from "./../components/Banner";
+import Banner from "../Core/components/Banner";
 import { gameDatas } from "../Core/api/REST";
 
-import { dummyJSON } from "../dummydata/dummyJSON";
-import MainPageCatalog from "../components/MainPageCatalog";
-import ProductsList from "./../components/ProductsList";
-import { Map } from "./../Core/map/Map";
+import { dummyJSON } from "../constants";
+import MainPageCatalog from "../Core/components/MainPageCatalog";
+import ProductsList from "../Core/components/ProductsList";
+import { Map } from "../Core/map/Map";
 
-const Main = () => {
+const HomePage = () => {
   const [randomGame, setRandomGame] = useState<Game[]>([]);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -41,4 +41,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default HomePage;

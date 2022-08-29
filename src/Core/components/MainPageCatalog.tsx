@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import Loader from "./../utils/Loader";
+import Loader from "../../utils/Loader";
 
 type MainPageCatalogProps = {
   randomGame: Game[];

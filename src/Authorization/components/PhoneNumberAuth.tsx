@@ -1,5 +1,5 @@
 import React, { Dispatch, FC, SetStateAction, useRef, useState } from "react";
-import { useAuth } from "./../Core/contexts/AuthContext";
+import { useAuth } from "./contexts/AuthContext";
 import Login from "./Login";
 import { ConfirmationResult } from "firebase/auth";
 type PhoneNumberProps = {
@@ -17,6 +17,7 @@ const PhoneNumberAuth: FC<PhoneNumberProps> = ({ setOpenSignUp }) => {
   const [toggleSignUpWithPhoneNumber, setToggleSignUpWithPhoneNumber] =
     useState(false);
   const { verifyPhoneNumber } = useAuth();
+
   const [code, setCode] = useState("");
 
   async function handleSubmit(e: any) {
@@ -27,8 +28,8 @@ const PhoneNumberAuth: FC<PhoneNumberProps> = ({ setOpenSignUp }) => {
       setverificationId(await verifyPhoneNumber(phoneNumberRef.current.value));
       setExpand(true);
       setMessage("SMS code sent");
-    } catch {
-      setError("Failed to sign in with Phone Number");
+    } catch (err: any) {
+      setError(err.message);
     }
     setLoading(false);
   }
@@ -57,7 +58,7 @@ const PhoneNumberAuth: FC<PhoneNumberProps> = ({ setOpenSignUp }) => {
         <div className="flex items-center justify-between">
           <p className="text-2xl">Sign Up</p>
           <span
-            className="color-[#aaa] float-right text-[28px] font-bold hover:text-black hover:cursor-pointer hover:no-underline"
+            className="color-[#aaa] float-right text-[28px] font-bold hover:text-sky-500 hover:cursor-pointer hover:no-underline"
             onClick={() => setOpenSignUp((prev: boolean) => !prev)}
           >
             &times;
@@ -70,7 +71,7 @@ const PhoneNumberAuth: FC<PhoneNumberProps> = ({ setOpenSignUp }) => {
           onSubmit={handleSubmit}
         >
           <div className="mt-4">
-            <label>Phone Number</label>
+            <label>Sign Up with Phone Number</label>
             <input
               className={inputStyle}
               ref={phoneNumberRef}
@@ -84,7 +85,7 @@ const PhoneNumberAuth: FC<PhoneNumberProps> = ({ setOpenSignUp }) => {
               disabled={loading}
               className="bg-[#F9A43F] hover:brightness-100 brightness-125 rounded-lg h-10 mt-3"
             >
-              Sign Up
+              Sign Up with Phone Number
             </button>
           )}
         </form>
@@ -114,12 +115,14 @@ const PhoneNumberAuth: FC<PhoneNumberProps> = ({ setOpenSignUp }) => {
 
         <hr className="border-t-2 mt-3 border-gray-500" />
         <div id="recaptcha-container"></div>
-        <button
-          onClick={() => setToggleSignUpWithPhoneNumber((prev) => !prev)}
-          className="mt-3 text-center"
-        >
-          Already have an account? Log In
-        </button>
+        <div className="text-center">
+          <button
+            onClick={() => setToggleSignUpWithPhoneNumber((prev) => !prev)}
+            className="mt-3 hover:decoration-sky-500 hover:underline hover:underline-offset-2"
+          >
+            Already have an account? Log In
+          </button>
+        </div>
       </div>
     </>
   );

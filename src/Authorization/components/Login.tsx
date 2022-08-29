@@ -1,14 +1,13 @@
 import React, { Dispatch, FC, SetStateAction, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "./../Core/contexts/AuthContext";
+import { useAuth } from "./contexts/AuthContext";
 import ForgotPassword from "./ForgotPassword";
 import SignUp from "./SignUp";
+import { inputStyle } from "../../constants";
 
 type LoginProps = {
   setOpenLogin: Dispatch<SetStateAction<boolean>>;
 };
-
-const inputStyle = `border-2 border-gray-500 rounded w-[100%] h-10 mt-3 p-2 active:border-red`;
 
 const Login: FC<LoginProps> = ({ setOpenLogin }) => {
   const [toggleLogin, setToggleLogin] = useState(false);
@@ -16,7 +15,7 @@ const Login: FC<LoginProps> = ({ setOpenLogin }) => {
   const navigate = useNavigate();
   const emailRef = useRef<any>();
   const passwordRef = useRef<any>();
-  const { login } = useAuth();
+  const { login, currentUser } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -29,8 +28,8 @@ const Login: FC<LoginProps> = ({ setOpenLogin }) => {
       await login(emailRef.current.value, passwordRef.current.value);
       navigate("/");
       setOpenLogin(false);
-    } catch {
-      setError("Failed to sign in");
+    } catch (err: any) {
+      setError(err.message);
     }
     setLoading(false);
   }
@@ -47,7 +46,7 @@ const Login: FC<LoginProps> = ({ setOpenLogin }) => {
         <div className="flex items-center justify-between">
           <p className="text-2xl">Log In</p>
           <span
-            className="color-[#aaa] float-right text-[28px] font-bold hover:text-black hover:cursor-pointer hover:no-underline"
+            className="color-[#aaa] float-right text-[28px] font-bold hover:text-sky-500 hover:cursor-pointer hover:no-underline"
             onClick={() => setOpenLogin((prev: boolean) => !prev)}
           >
             &times;
@@ -81,7 +80,7 @@ const Login: FC<LoginProps> = ({ setOpenLogin }) => {
         </form>
         <div className="flex flex-col">
           <button
-            className="mt-3 text-center"
+            className="mt-3 text-center hover:decoration-sky-500 hover:underline hover:underline-offset-2"
             onClick={() => setToggleForgotPassword((prev) => !prev)}
           >
             Forgot the password?
@@ -89,7 +88,7 @@ const Login: FC<LoginProps> = ({ setOpenLogin }) => {
 
           <button
             onClick={() => setToggleLogin((prev) => !prev)}
-            className="mt-3 text-center"
+            className="mt-3 text-center hover:decoration-sky-500 hover:underline hover:underline-offset-2"
           >
             Need an account? Sign Up
           </button>

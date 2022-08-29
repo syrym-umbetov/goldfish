@@ -5,7 +5,7 @@ import {
   useState,
   useEffect,
 } from "react";
-import { auth } from "../../firebase";
+import { auth } from "../../../firebase";
 import {
   ConfirmationResult,
   createUserWithEmailAndPassword,
@@ -14,6 +14,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPhoneNumber,
   signOut,
+  updateProfile,
   User,
   UserCredential,
 } from "firebase/auth";
@@ -25,6 +26,7 @@ type AuthContextType = {
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
   verifyPhoneNumber: (phoneNumber: string) => Promise<ConfirmationResult>;
+  updateName: (name: string) => Promise<void> | undefined;
 };
 const AuthContext = createContext({} as AuthContextType);
 
@@ -58,6 +60,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
     return createUserWithEmailAndPassword(auth, email, password);
   }
 
+  function updateName(name: string) {
+    if (currentUser) {
+      return updateProfile(currentUser, { displayName: name });
+    }
+  }
+
   function verifyPhoneNumber(phoneNumber: string) {
     generateRecaptcha();
     const appVerifier = window.recaptchaVerifier;
@@ -89,6 +97,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     logout,
     resetPassword,
     verifyPhoneNumber,
+    updateName,
   };
   return (
     <AuthContext.Provider value={value}>

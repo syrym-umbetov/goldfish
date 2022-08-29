@@ -1,19 +1,26 @@
-import React, { Dispatch, FC, SetStateAction, useRef, useState } from "react";
-import { useAuth } from "./../Core/contexts/AuthContext";
+import React, {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { useAuth } from "./contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Login from "./Login";
 import PhoneNumberAuth from "./PhoneNumberAuth";
+import { inputStyle } from "../../constants";
 
 type SignUpProps = {
   setOpenSignUp: Dispatch<SetStateAction<boolean>>;
 };
-const inputStyle = `border-2 border-gray-500 rounded w-[100%] h-10 mt-3 p-2 active:border-red`;
-
 const SignUp: FC<SignUpProps> = ({ setOpenSignUp }) => {
+  const nameRef = useRef<any>();
   const emailRef = useRef<any>();
   const passwordRef = useRef<any>();
   const passwordConfirmRef = useRef<any>();
-  const { signup } = useAuth();
+  const { signup, updateName, currentUser } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [toggleSignUpWithPhoneNumber, setToggleSignUpWithPhoneNumber] =
@@ -21,7 +28,7 @@ const SignUp: FC<SignUpProps> = ({ setOpenSignUp }) => {
   const [message, setMessage] = useState("");
   const [toggleSignUp, setToggleSignUp] = useState(false);
   const navigate = useNavigate();
-
+  console.log(currentUser);
   async function handleSubmit(e: any) {
     e.preventDefault();
 
@@ -33,16 +40,20 @@ const SignUp: FC<SignUpProps> = ({ setOpenSignUp }) => {
       setError("");
       setLoading(true);
       await signup(emailRef.current.value, passwordRef.current.value);
+
       setMessage("Successfully signed in!");
       setTimeout(() => {
         navigate("/");
         setOpenSignUp(false);
       }, 3000);
-    } catch {
-      setError("Failed to create an account");
+    } catch (err: any) {
+      setError(err.message);
     }
     setLoading(false);
   }
+  useEffect(() => {
+    updateName(nameRef.current.value);
+  }, [currentUser, updateName]);
   if (toggleSignUp) return <Login setOpenLogin={setOpenSignUp} />;
   if (toggleSignUpWithPhoneNumber)
     return <PhoneNumberAuth setOpenSignUp={setOpenSignUp} />;
@@ -52,7 +63,7 @@ const SignUp: FC<SignUpProps> = ({ setOpenSignUp }) => {
         <div className="flex items-center justify-between">
           <p className="text-2xl">Sign Up</p>
           <span
-            className="color-[#aaa] float-right text-[28px] font-bold hover:text-black hover:cursor-pointer hover:no-underline"
+            className="color-[#aaa] float-right text-[28px] font-bold hover:text-sky-500 hover:cursor-pointer hover:no-underline"
             onClick={() => setOpenSignUp((prev: boolean) => !prev)}
           >
             &times;
@@ -64,6 +75,10 @@ const SignUp: FC<SignUpProps> = ({ setOpenSignUp }) => {
           className="flex justify-center flex-col text-sm"
           onSubmit={handleSubmit}
         >
+          <div className="mt-4">
+            <label>Name</label>
+            <input className={inputStyle} ref={nameRef} type="text" required />
+          </div>
           <div className="mt-4">
             <label>Email</label>
             <input
@@ -95,13 +110,13 @@ const SignUp: FC<SignUpProps> = ({ setOpenSignUp }) => {
 
           <button
             onClick={() => setToggleSignUp((prev) => !prev)}
-            className="mt-3 text-center"
+            className="mt-3 text-center hover:decoration-sky-500 hover:underline hover:underline-offset-2"
           >
             Already have an account? Log In
           </button>
           <button
             onClick={() => setToggleSignUpWithPhoneNumber((prev) => !prev)}
-            className="mt-3 text-center"
+            className="mt-3 text-center hover:decoration-sky-500 hover:underline hover:underline-offset-2"
           >
             Login with phone number
           </button>

@@ -1,9 +1,9 @@
-import logo from "../assets/logo.svg";
-import instagram from "../assets/instagram.svg";
-import facebook from "../assets/facebook.svg";
+import logo from "../../assets/logo.svg";
+import instagram from "../../assets/instagram.svg";
+import facebook from "../../assets/facebook.svg";
 import { useState } from "react";
-import SignUp from "./SignUp";
-import { useAuth } from "./../Core/contexts/AuthContext";
+import SignUp from "../../Authorization/components/SignUp";
+import { useAuth } from "../../Authorization/components/contexts/AuthContext";
 
 import {
   ShoppingCartIcon,
@@ -12,7 +12,7 @@ import {
   UserIcon,
   MenuIcon,
 } from "@heroicons/react/solid";
-import { gameDatas } from "../Core/api/REST";
+import { gameDatas } from "../api/REST";
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "./Modal";
 

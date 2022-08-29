@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import ProductCard from "./ProductCard";
-import { gameDatas } from "../Core/api/REST";
+import { gameDatas } from "../api/REST";
 import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
-import Loader from "./../utils/Loader";
-import "../hideScrollbar.css";
+import Loader from "../../utils/Loader";
+import "../utils/hideScrollbar.css";
 
 const LeftArrow = () => {
   const { scrollPrev } = useContext(VisibilityContext);
